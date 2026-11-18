@@ -1,0 +1,362 @@
+{% extends 'cursos/base.html' %}
+
+{% block content %}
+<!-- Bloque de Alertas -->
+{% if mensaje %}
+    <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-4 mb-4" role="alert">
+        {{ mensaje }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+{% if error %}
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm rounded-4 mb-4" role="alert">
+        {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+{% if not user.is_authenticated %}
+    <!-- 🌟 VISTA VISITANTE (Banner principal con imagen grande integrada al borde) -->
+    <div class="hero-section p-4 p-lg-5 mb-5 shadow-lg rounded-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <h1 class="display-4 fw-bold mb-3">Aprende, Crea y Conquista tu Futuro</h1>
+                <p class="lead mb-4 text-white-50">Únete a nuestra plataforma y potencia tus habilidades tecnológicas con educación de vanguardia.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'registro' %}" class="btn btn-light text-primary fw-bold px-4 py-3 shadow-sm">Regístrate Gratis</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light px-4 py-3">Iniciar Sesión</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Estudiantes en plataforma" class="img-fluid rounded-4 shadow w-100" style="max-height: 320px; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.2);">
+            </div>
+        </div>
+    </div>
+
+    <!-- 💡 LAS 3 TARJETAS DE VALOR (DISEÑO MEJORADO, CENTRADAS Y CON PALABRAS EN MAYÚSCULAS) -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="p-4 bg-white rounded-4 shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <span class="fs-4">🚀</span>
+                </div>
+                <h4 class="fw-bold h5 text-primary mb-2 text-uppercase">Aprende</h4>
+                <p class="text-muted small mb-0">Domina herramientas tecnológicas modernas mediante clases prácticas y contenido estructurado de alta calidad.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 bg-white rounded-4 shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <span class="fs-4">🎯</span>
+                </div>
+                <h4 class="fw-bold h5 text-primary mb-2 text-uppercase">Propósito</h4>
+                <p class="text-muted small mb-0">Potencia tu perfil profesional preparándote de forma sólida para los retos del mundo real y académico.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 bg-white rounded-4 shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <span class="fs-4">💡</span>
+                </div>
+                <h4 class="fw-bold h5 text-primary mb-2 text-uppercase">Fórmate</h4>
+                <p class="text-muted small mb-0">Gestiona tus horarios de manera autónoma y accede a aulas virtuales interactivas con recursos verificados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌐 CATÁLOGO INFORMATIVO PARA VISITANTES -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="fw-bold text-dark h3">Nuestra Oferta Académica</h3>
+            <p class="text-muted">Explora los cursos tecnológicos que impartimos en la plataforma</p>
+            <hr class="text-muted opacity-25 w-25 mx-auto">
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        {% for curso in cursos %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <!-- Imágenes únicas y 100% acordes a cada materia -->
+                    {% if "Tendencias" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% elif "Bases" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% elif "Introducción" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% elif "Programación" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% elif "Estructura" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% elif "Multimedia" in curso.nombre %}
+                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% endif %}
+
+                    <div class="card-body d-flex flex-column p-4">
+                        <!-- Títulos con Emojis personalizados -->
+                        <h4 class="h5 fw-bold text-dark mb-2">
+                            {% if "Tendencias" in curso.nombre %}🌐 {{ curso.nombre }}
+                            {% elif "Bases" in curso.nombre %}🗄️ {{ curso.nombre }}
+                            {% elif "Introducción" in curso.nombre %}💡 {{ curso.nombre }}
+                            {% elif "Programación" in curso.nombre %}💻 {{ curso.nombre }}
+                            {% elif "Estructura" in curso.nombre %}📊 {{ curso.nombre }}
+                            {% elif "Multimedia" in curso.nombre %}🎨 {{ curso.nombre }}
+                            {% else %}📚 {{ curso.nombre }}
+                            {% endif %}
+                        </h4>
+                        <!-- Descripción general, clara y técnica -->
+                        <p class="text-muted small mb-0">
+                            {% if "Tendencias" in curso.nombre %}
+                                Domina el desarrollo backend avanzado mediante arquitecturas web modernas con Django, garantizando seguridad y escalabilidad profesional.
+                            {% elif "Bases" in curso.nombre %}
+                                Aprende a diseñar, modelar y optimizar bases de datos relacionales y no relacionales para gestionar grandes volúmenes de información eficientemente.
+                            {% elif "Introducción" in curso.nombre %}
+                                Adquiere las bases lógicas, el pensamiento computacional y la estructura de algoritmos esenciales para iniciar en el mundo de la programación.
+                            {% elif "Programación" in curso.nombre %}
+                                Construye aplicaciones web completas y funcionales integrando el trabajo del lado del servidor y del cliente bajo buenas prácticas de desarrollo.
+                            {% elif "Estructura" in curso.nombre %}
+                                Comprende cómo organizar y manipular datos de forma eficiente en la memoria para optimizar el rendimiento y la velocidad de los sistemas.
+                            {% elif "Multimedia" in curso.nombre %}
+                                Explora el manejo de recursos visuales y la optimización de interfaces interactivas para potenciar la experiencia digital del usuario.
+                            {% else %}
+                                {{ curso.descripcion }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">No hay cursos disponibles en este momento.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+{% else %}
+    <!-- 🎓 DASHBOARD DE ESTUDIANTE (INTACTO Y FUNCIONAL) -->
+    <div class="row align-items-center mb-4 py-3 bg-white rounded-4 shadow-sm px-4">
+        <div class="col-md-8">
+            <h2 class="fw-bold text-dark mb-1">¡Hola de nuevo, {{ user.username }}! 👋</h2>
+            <p class="text-muted mb-0">Gestiona tus inscripciones y explora el catálogo académico.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 fw-bold rounded-pill">Panel de Estudiante</span>
+        </div>
+    </div>
+
+    <!-- 📌 MI AGENDA Y CURSOS INSCRITOS -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="p-4 bg-white rounded-4 shadow-sm border-start border-primary border-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold text-dark h5 mb-0">📅 Mis Cursos Inscritos</h3>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill">Materias Activas</span>
+                </div>
+                <p class="text-muted small mb-4">Accede a tus aulas virtuales y administra tus horarios asignados.</p>
+                
+                <div class="row g-3">
+                    {% with tiene_cursos=False %}
+                        {% for curso in cursos %}
+                            {% if curso.id in mis_inscripciones_ids %}
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded-4 border h-100 d-flex flex-column">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="bg-primary text-white rounded-3 p-2 me-3 text-center" style="min-width: 45px;">
+                                                <span class="d-block small fw-bold text-uppercase" style="font-size: 0.65rem;">Clase</span>
+                                                <span class="fs-6 fw-bold">💻</span>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-0">{{ curso.nombre }}</h6>
+                                                <small class="text-muted">Prof. {{ curso.profesor.nombre }}</small>
+                                            </div>
+                                        </div>
+                                        <hr class="text-muted opacity-25 my-2">
+                                        
+                                        <!-- LISTADO DE TURNOS -->
+                                        <div class="mb-3 flex-grow-1">
+                                            {% for ins in curso.inscripciones.all %}
+                                                {% if ins.estudiante.user == request.user %}
+                                                    <div class="p-2 bg-white rounded-3 border shadow-sm mb-2 d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <span class="small fw-bold text-primary">📅 {{ ins.horario_elegido.get_dia_display }}</span><br>
+                                                            <span class="text-muted" style="font-size: 0.75rem;">⏰ {{ ins.horario_elegido.hora_inicio|time:"H:i" }} - {{ ins.horario_elegido.hora_fin|time:"H:i" }}</span>
+                                                        </div>
+                                                        <form action="" method="POST" class="m-0">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="accion" value="cancelar">
+                                                            <input type="hidden" name="inscripcion_id" value="{{ ins.id }}">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-2 fw-bold" style="font-size: 0.75rem;" title="Cancelar este turno">
+                                                                ❌ Cancelar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                        <!-- ACCESO AL AULA VIRTUAL -->
+                                        <div class="mt-auto pt-2 d-grid">
+                                            <button type="button" class="btn btn-primary btn-sm fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#aulaModal{{ curso.id }}">
+                                                🎓 Entrar al Aula Virtual
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- VENTANA MODAL DEL AULA VIRTUAL -->
+                                <div class="modal fade" id="aulaModal{{ curso.id }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title fw-bold">🎓 Aula Virtual: {{ curso.nombre }}</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body p-4">
+                                                <p class="text-muted mb-2"><strong>Descripción:</strong> {{ curso.descripcion }}</p>
+                                                {% if curso.proposito %}
+                                                    <p class="text-muted mb-4"><strong>🎯 Propósito:</strong> {{ curso.proposito }}</p>
+                                                {% endif %}
+                                                <hr>
+
+                                                <!-- Google Meet -->
+                                                <div class="alert alert-success d-flex align-items-center justify-content-between p-3 rounded-4 shadow-sm mb-4">
+                                                    <div>
+                                                        <h6 class="fw-bold mb-1">🎥 Sesión de Clase en Vivo</h6>
+                                                        <p class="small mb-0 text-muted">Conéctate a la sala oficial de Google Meet.</p>
+                                                    </div>
+                                                    {% if curso.link_meet %}
+                                                        <a href="{{ curso.link_meet }}" target="_blank" class="btn btn-success fw-bold px-3">Unirse a Meet</a>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary">Sala aún no asignada</span>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Contenido Bibliográfico y Recursos -->
+                                                <h6 class="fw-bold text-dark mb-3">📁 Contenido Bibliográfico y Recursos</h6>
+                                                <div class="list-group mb-4">
+                                                    {% if curso.contenido_bibliografico %}
+                                                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 rounded-3 mb-2 border shadow-sm">
+                                                            <div>
+                                                                <span class="fw-bold text-dark">Documentación y Enlace de Referencia</span>
+                                                                <p class="small text-muted mb-0">Investigación, glosario o guía oficial de la unidad.</p>
+                                                            </div>
+                                                            <a href="{{ curso.contenido_bibliografico }}" target="_blank" class="btn btn-outline-dark btn-sm fw-bold px-3">Acceder al Recurso</a>
+                                                        </div>
+                                                    {% else %}
+                                                        <p class="text-muted small fst-italic">No hay contenido bibliográfico cargado todavía.</p>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Video YouTube -->
+                                                <h6 class="fw-bold text-dark mb-3">🎬 Clases Grabadas</h6>
+                                                {% if curso.video_youtube %}
+                                                    <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-sm border bg-dark">
+                                                        {{ curso.video_youtube|safe }}
+                                                    </div>
+                                                {% else %}
+                                                    <p class="text-muted small fst-italic">No hay clases grabadas disponibles.</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="modal-footer bg-light">
+                                                <button type="button" class="btn btn-secondary fw-bold px-4" data-bs-dismiss="modal">Cerrar Aula</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <div class="col-12 text-center py-3">
+                                <p class="text-muted small mb-0">(NO SE HA INSCRITO A NINGUN CURSO)</p>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+
+                    {% if not mis_inscripciones_ids %}
+                        <div class="col-12 text-center py-3">
+                            <p class="text-muted fw-bold small mb-0">(NO SE HA INSCRITO A NINGUN CURSO)</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATÁLOGO ACADÉMICO PARA ESTUDIANTES (Con su funcionalidad completa de inscripción) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="fw-bold text-dark h4">Catálogo Académico</h3>
+            <p class="text-muted small">Selecciona el bloque con su día e inscríbete</p>
+            <hr class="text-muted opacity-25">
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        {% for curso in cursos %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    {% if curso.imagen %}
+                        <img src="{{ curso.imagen }}" class="card-img-top" alt="{{ curso.nombre }}" style="height: 180px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Curso" style="height: 180px; object-fit: cover;">
+                    {% endif %}
+
+                    <div class="card-body d-flex flex-column p-4">
+                        <h4 class="h5 fw-bold text-dark mb-2">{{ curso.nombre }}</h4>
+                        <p class="text-muted small mb-3">{{ curso.descripcion }}</p>
+                        
+                        <hr class="text-muted opacity-25">
+                        
+                        <ul class="list-unstyled small text-secondary mb-3">
+                            {% if curso.proposito %}
+                                <li class="mb-2"><strong>🎯 Propósito:</strong> {{ curso.proposito }}</li>
+                            {% endif %}
+                            <li class="mb-2"><strong>👨‍🏫 Profesor:</strong> {{ curso.profesor.nombre }}</li>
+                            
+                            <li class="mt-2">
+                                <strong>👥 Cupos Totales:</strong> 
+                                {% if curso.cupos_disponibles > 0 %}
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Disponibles ({{ curso.cupos_disponibles }})</span>
+                                {% else %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold px-2 py-1">Curso Lleno</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="accion" value="inscribir">
+                                
+                                {% if curso.cupos_disponibles > 0 %}
+                                    <div class="mb-3">
+                                        <label for="horario_{{ curso.id }}" class="form-label small fw-bold text-secondary">Elige tu bloque horario:</label>
+                                        <select name="horario_id" id="horario_{{ curso.id }}" class="form-select form-select-sm" required>
+                                            <option value="" selected disabled>-- Selecciona un bloque --</option>
+                                            {% for h in curso.horarios.all %}
+                                                <option value="{{ h.id }}">{{ h.get_dia_display }} ({{ h.hora_inicio|time:"H:i" }} - {{ h.hora_fin|time:"H:i" }})</option>
+                                            {% empty %}
+                                                <option value="" disabled>No hay horarios definidos</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 fw-bold text-white shadow-sm">Inscribirme</button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary w-100 fw-bold" disabled>Agotado</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">No hay cursos disponibles en este momento.</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
